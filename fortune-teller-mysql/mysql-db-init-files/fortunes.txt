@@ -1,0 +1,3 @@
+"For optimal use, Datadog recommends a log event should not exceed 25K bytes in size. When using the Datadog Agent, log events greater than 256KB are split into several entries."	logs
+"API tests allow you to launch single or chained requests to perform verifications on your key systems at various network levels:HTTP,TCP,SSL,DNS, and ICMP."	synthetics
+"It is recommended to fully install the Agent. However, a standalone DogStatsD package is available for Amazon Linux, CentOS, Debian, Fedora, Red Hat, SUSE and Ubuntu."	agent
