@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener} from '@angular/core';
 import {cloudCss} from './interfaces/cloudCss';
-import {EventConsumer} from './classes/EventConsumer';
-import {Point} from './interfaces/point'
-import { Observable } from 'rxjs';
+import {Point} from './interfaces/point';
+import { Observable, Subscriber } from 'rxjs';
 import {HttpClient, HttpClientModule, HttpHeaders, HttpParams} from '@angular/common/http';
 import { datadogRum } from '@datadog/browser-rum';
+
 
 @Component({
   selector: 'app-root',
@@ -20,6 +20,9 @@ export class AppComponent implements OnInit, AfterViewInit{
 
   @ViewChild('quoteText')
   quoteText:ElementRef;
+
+  @ViewChild('mainGrid')
+  mainGrid:ElementRef;
   
   
   private ctx: CanvasRenderingContext2D;
@@ -29,22 +32,28 @@ export class AppComponent implements OnInit, AfterViewInit{
       'right':'30vw',
       'display':'none'
    };
+
+   public gridProps= {
+    'position': 'relative',
+    'top': '60px',
+    'display': 'grid',
+    // 'grid-template-columns': 'repeat(3, 1fr)'
+    'grid-template-columns': '1fr'
+  };
   
    public cloudProps: cloudCss;
    public updatedProps: cloudCss;
    public focalPoint: Point;
    public pointsList: Array<Point>;
    public topicQueue: Array<String>;
+   public gridRow: number;
+   public topicObservable;
+   public isConsuming:boolean;
                      
   constructor(private httpClient: HttpClient){
     //this.updatedProps = Object.assign({}, this.startProps);
     this.cloudProps = Object.assign({}, this.startProps);
-    //this.topicQueue = 
-    // Observable.fromEvent(window, 'resize')
-    //     .debounceTime(1500)
-    //     .subscribe((event) => {
-    //       //this.doSmth(event);
-    //     });
+    this.gridProps['grid-template-rows'] =  + (document.documentElement.clientHeight - 60) + "px";
     datadogRum.init({
       applicationId: 'bf97d17c-15d9-43f7-9058-2929c414755a',
       clientToken: 'pubecd1d4823887980a4a7c96a476ac55f1',
@@ -60,7 +69,8 @@ export class AppComponent implements OnInit, AfterViewInit{
 
   ngOnInit(): void{
     this.initializeCanvas();
-
+    this.isConsuming = false;
+    this.topicQueue = new Array<String>();
   }
   ngAfterViewInit() {
   }
@@ -69,6 +79,7 @@ export class AppComponent implements OnInit, AfterViewInit{
   onResize(event) {
     //console.log("resize here");
     event.target.innerWidth;
+    this.gridProps['grid-template-rows'] =  + (document.documentElement.clientHeight - 60) + "px";
     this.initializeCanvas();
   }
 
@@ -81,7 +92,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     //sets the ctx property of the class to the 2d context of the canvas element
     this.ctx = this.canvasEl.nativeElement.getContext('2d');
     //sets the focal point of the purple bands behind zoltbits
-    this.focalPoint = {xPosition:window.innerWidth * 0.5, yPosition: (window.innerHeight-60) * 0.6}
+    this.focalPoint = {xPosition:window.innerWidth * 0.5, yPosition: (window.innerHeight-60) * 0.5}
     //creates the list of the 3 different band positions to base the animation on
     this.pointsList= [{xPosition:2, yPosition: 0},{xPosition:0, yPosition: 2},{xPosition:1, yPosition: 1}]
     //sets the purple bands to their deault position
@@ -91,12 +102,37 @@ export class AppComponent implements OnInit, AfterViewInit{
 
   //function to handle the click event from each topic button
   initializeCloudAction(event){
-    this.getFortune(event);
-    this.moveCloud();
+    //push the new topic onto the topicQueue array
+    this.topicQueue.push(event.currentTarget.innerHTML)
+    //check if consumer function is already initialized
+    if(!this.isConsuming){
+      this.consume();
+    }
+  }
+
+  consume(){
+    //consume function calls itself recursively in the timeout block so long as there are more
+    //topics in the topicQueue array to be consume
+    this.isConsuming = true;
+    if(this.topicQueue.length > 0){
+      //initializes backend server call and cloud actions to display the next topic
+      this.getFortune(this.topicQueue.shift());
+      this.moveCloud();
+      //timeout matches the timing of the cloud actions
+      setTimeout(() => {
+        //recursive call to check if more topics need to be consumed
+        this.consume();
+      }, 15000)
+    }
+    //if no more topics to be consumed, stop consuming
+    else{
+      this.isConsuming = false;
+    }
+
   }
 
 
-  
+
   animate(start1: number, start2: number): void{
     //clear the canvas
     this.ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
@@ -123,8 +159,9 @@ export class AppComponent implements OnInit, AfterViewInit{
   drawTopBand(start: number, direction: string){
     //stop is the y coordinate of the broad side of the band
 
-    //the y 
-    let stop = window.innerHeight - (window.innerHeight * 0.1);
+
+    // let stop = window.innerHeight - (window.innerHeight * 0.1);
+    let stop = window.innerHeight - 60;
     //console.log(window.innerHeight * 0.1);
     // let stop = window.innerHeight;
     if (direction == "top"){
@@ -160,7 +197,7 @@ export class AppComponent implements OnInit, AfterViewInit{
   }
 
   moveCloud(){
-    console.log("move cloud clicked");
+    // console.log("move cloud clicked");
     this.myLoop(0);
     this.cloudProps['animation-name'] = 'cloudAnimate';
     this.cloudProps['animation-duration'] = '8s';
@@ -168,12 +205,12 @@ export class AppComponent implements OnInit, AfterViewInit{
     this.cloudProps['animation-timing-function'] = 'ease-in-out';
     // this.cloudProps['animation-timing-function'] = 'cubic-bezier(0.5, 0.8, 0.9, 0.2)';
     this.cloudProps['display'] = 'block';
-    console.log(this.cloudProps);
-    setTimeout(() => {   //  call a 3s setTimeout when the loop 
-        console.log("in timeout");
-        console.log(this.startProps);
+    // console.log(this.cloudProps);
+    setTimeout(() => { 
+        console.log("setting start props");
+        // console.log(this.startProps);
         this.cloudProps = Object.assign({}, this.startProps);
-        console.log(this.cloudProps);
+        // console.log(this.cloudProps);
     }, 15000)
   }
 
@@ -181,7 +218,7 @@ export class AppComponent implements OnInit, AfterViewInit{
 
   myLoop(count: number){
     var i = count;
-    setTimeout(() => {   //  call a 3s setTimeout when the loop is called
+    setTimeout(() => { 
       i++;
       var curPoint = this.pointsList[i % 3];
       //console.log(i);
@@ -192,24 +229,22 @@ export class AppComponent implements OnInit, AfterViewInit{
     }, 300)
   }
 
-  getFortune(event){
-    console.log(event.currentTarget.innerHTML);
-    var topic = event.currentTarget.innerHTML;
+  getFortune(topic){
+    // console.log(topic);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        // 'Authorization': 'Bearer '+ this.userAppAuth,
         }),
     };
-    const postData = `topic=${topic}`;
-    this.httpClient.post('http://localhost:8080/getFortune', postData, httpOptions)
+    this.httpClient.get('http://localhost:8080/getFortune/' + topic, httpOptions)
     .subscribe((response) => {
-      console.log(response);
+      // console.log(response);
       this.quoteText.nativeElement.innerHTML = response;
     },
     (err) => console.log('HTTP Error', err)
     );
   }
+
 
 
 }
