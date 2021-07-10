@@ -5,7 +5,7 @@ services:
       container_name: datadog-agent-ft
       environment:
         - DD_APM_ENABLED=true
-        - DD_API_KEY=f5f4bcc12285c51112afe1ba662d0cdb
+        - DD_API_KEY=<API_KEY>
         - DD_LOGS_ENABLED=true
         - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
         - DD_APM_NON_LOCAL_TRAFFIC=true
