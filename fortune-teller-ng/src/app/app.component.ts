@@ -122,7 +122,7 @@ export class AppComponent implements OnInit, AfterViewInit{
       setTimeout(() => {
         //recursive call to check if more topics need to be consumed
         this.consume();
-      }, 15000)
+      }, 15500)
     }
     //if no more topics to be consumed, stop consuming
     else{
@@ -227,6 +227,23 @@ export class AppComponent implements OnInit, AfterViewInit{
        this.myLoop(i);
       }
     }, 300)
+  }
+
+  getError(event){
+    event.currentTarget.innerHTML
+    console.log(event.currentTarget.innerHTML);
+    let code = event.currentTarget.innerHTML;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        }),
+    };
+    this.httpClient.get('http://localhost:8080/getError/' + code, httpOptions)
+    .subscribe((response) => {
+      console.log(response);
+    },
+    (err) => console.log('HTTP Error', err)
+    );
   }
 
   getFortune(topic){
