@@ -1,4 +1,4 @@
-//const tracer = require('dd-trace').init();
+const tracer = require('dd-trace').init();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -31,11 +31,11 @@ const app = express()
   //.use(events(connection))
   .use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/getFortune', (req, res, next) => {
+app.get('/getFortune/:topic', (req, res, next) => {
   console.log("called");
-  console.log(req.body.topic);
+  console.log(req.params);
   connection.query(
-    'SELECT * FROM fortunes WHERE topic=(?) ORDER BY RAND() LIMIT 1;', [req.body.topic],
+    'SELECT * FROM fortunes WHERE topic=(?) ORDER BY RAND() LIMIT 1;', [req.params.topic],
     (error, result) => {
       if (error) {
           console.error(error);
