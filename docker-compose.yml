@@ -5,7 +5,7 @@ services:
       container_name: datadog-agent-ft
       environment:
         - DD_APM_ENABLED=true
-        - DD_API_KEY=<API_KEY>
+        - DD_API_KEY=f5f4bcc12285c51112afe1ba662d0cdb	
         - DD_LOGS_ENABLED=true
         - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
         - DD_APM_NON_LOCAL_TRAFFIC=true
@@ -16,6 +16,8 @@ services:
       ports:
         - "8126:8126"
       restart: on-failure
+      depends_on: 
+        - mysql_db
     mysql_db:
       image: mysql:8.0.20
       environment:
@@ -23,6 +25,10 @@ services:
       volumes:
         - ./fortune-teller-mysql/conf.d:/etc/mysql/conf.d
         - ./fortune-teller-mysql/mysql-db-init-files:/docker-entrypoint-initdb.d
+      labels:
+        com.datadoghq.ad.check_names: '["mysql"]'
+        com.datadoghq.ad.init_configs: '[{}]'
+        com.datadoghq.ad.instances: '[{"server": "%%host%%", "user": "datadog","pass": "tacosandburritos"}]'
     express_server:
       build:
         dockerfile: Dockerfile
