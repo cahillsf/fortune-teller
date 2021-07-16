@@ -1,9 +1,10 @@
-const tracer = require('dd-trace').init();
+const tracer = require('dd-trace').init({ debug: true, logInjection: true });
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const events = require('./route-fortunes');
+const logger = require('../logger')
 //require('dotenv').config()
 
 //import {Observable} from rxjs;
