@@ -1,0 +1,192 @@
+1,The Datadog Agent is a software that runs on your hosts,agent
+2,"The Datadog Agent is open-source, and its source code is available on GitHub at DataDog/datadog-agent.",agent
+3,It is recommended to fully install the Agent,agent
+4,This package is used in containerized environments where DogStatsD runs as a sidecar or environments running a DogStatsD server without full Agent functionality.,agent
+5,The standalone DogStatsD package is installed with the Agent one-line install command except every occurrence of datadog-agent should be replaced with datadog-dogstatsd,agent
+6,"Datadog recommends you update Datadog Agent with every minor and patch release, or, at a minimum, monthly.",agent
+7,Upgrading to a major Datadog Agent version and keeping it updated is the only supported way to get the latest Agent functionality and fixes,agent
+8,"The Agent has frequent update releases, though, and managing updates at enterprise scale can be challenging",agent
+9,"To update the Datadog Agent core between two minor versions on a given host, run the corresponding install command for your platform.",agent
+10,Datadog Agent release numbering follows SemVer rules.,agent
+11,By default the Agent binds 3 ports on Linux and 4 on Windows and OSX:,agent
+12,The Agent forwarder send metrics over HTTPS to Datadog,agent
+13,"Note: For Windows users, all four Agent processes appear as instances of ddagent.exe with the description DevOps best friend.",agent
+14,The Agent configuration resides at /etc/dd-agent/datadog.conf and /etc/dd-agent/conf.d,agent
+15,All listening processes are bound by default to 127.0.0.1 and/or ::1 on v3.4.1+ of the Agent,agent
+16,For information on running the Agent through a proxy see Agent proxy configuration,agent
+17,"When the Agent is running, use the datadog-agent launch-gui command to open the GUI in your default web browser.",agent
+18,Note: The Agent GUI isn't supported on 32-bit Windows platforms.,agent
+19,"For security reasons, the GUI can only be accessed from the local network interface (localhost/127.0.0.1), therefore you must be on the same host that the Agent is running",agent
+20,"That is, you cannot run the Agent on a VM or a container and access it from the host machine.",agent
+21,"With Agent v6+, the command line interface is based on subcommands",agent
+22,Enabling more integrations may increase Agent resource consumption.,agent
+23,Enabling JMX Checks forces the Agent to use more memory depending on the number of beans exposed by the monitored JVMs,agent
+24,"Note: Since v5.15 of the container Agent, it is recommended to set container resources to at least 256MB due to an added memory cache – upping the limit is not to account for baseline usage but rather to accommodate temporary spikes",agent
+25,"To manually update the Datadog Agent core between two minor versions on a given host, run the corresponding install command for your platform.",agent
+26,Note: If you want to manually update one specific Agent integration refer to the Integration Management guide.,agent
+27,See the dedicated documentation for Agent configuration files.,agent
+28,"Edit the Agent's main configuration file, datadog.yaml, to set the site parameter (defaults to datadoghq.com).",agent
+29,See the dedicated documentation for Agent log files,agent
+30,The Datadog IoT Agent is a version of the Agent optimized for monitoring IoT devices and embedded applications,agent
+31,Customers use the IoT Agent to monitor a wide variety of devices from digital displays to security devices running image detection algorithms.,agent
+32,The IoT Agent does not include the Python interpreter and other integrations pre-packaged with the standard Agent,agent
+33,"The IoT Agent is available as DEB and RPM packages for Linux devices running on x64, arm64 (ARMv8), and ARMv7 architectures.",agent
+34,The IoT Agent is built to have a minimal footprint and consume minimal network bandwidth.,agent
+35,"To automatically download and install the correct IoT Agent for your operating system and chipset architecture, use the following command:",agent
+36,The IoT Agent supports the same CLI commands as the standard Agent.,agent
+37,"Run the Datadog Agent in your Kubernetes cluster as a DaemonSet in order to start collecting your cluster and applications metrics, traces, and logs",agent
+38,Note: Agent version 6.0 and above only support versions of Kubernetes higher than 1.7.6,agent
+39,Take advantage of DaemonSets to deploy the Datadog Agent on all your nodes (or on specific nodes by using nodeSelectors).,agent
+40,"Configure Agent permissions: If your Kubernetes has role-based access control (RBAC) enabled, configure RBAC permissions for your Datadog Agent service account",agent
+41,The Datadog Agent and Cluster Agent can be configured to retrieve Kubernetes resources for Live Containers,agent
+42,"Once the Agent is up and running in your cluster, use Datadog's Autodiscovery feature to collect metrics and logs automatically from your pods.",agent
+43,Find below the list of environment variables available for the Datadog Agent,agent
+44,"Starting with Agent v6.4.0 (and v6.5.0 for the Trace Agent), you can override the Agent proxy settings with the following environment variables:",agent
+45,"For more information about proxy settings, see the Agent v6 Proxy documentation.",agent
+46,Optional collection Agents are disabled by default for security or performance reasons,agent
+47,"To enable the Live Container view, make sure you are running the process agent in addition to setting DD_PROCESS_AGENT_ENABLED to true.",agent
+48,See the Agent Commands guides to discover all the Docker Agent commands.,agent
+49,Customers can send data to the Datadog service by using a locally installed Agent or through our HTTP API,agent
+50,"While use of Datadog does not strictly require use of the Datadog Agent, the vast majority of customers leverage the Agent",agent
+51,The official repositories and/or binary packages of the Agent are signed,agent
+52,The Datadog Agent submits data to Datadog over a TLS-encrypted TCP connection by default,agent
+53,"As of version 6, the Agent can be configured to enforce TLS 1.2 when connecting to Datadog",agent
+54,"Customers who require the use of strong cryptography  for example, to meet PCI requirements, should use Agent v6 and set the force_tls_12: true setting in the Agent's configuration file.",agent
+55,Traffic is always initiated by the Agent to Datadog via TLS-encrypted TCP connection by default,agent
+56,No sessions are ever initiated from Datadog back to the Agent,agent
+57,See the Agent's Network page for more information on configuring firewalls to whitelist the required Datadog domains and ports,agent
+58,The Datadog Agent generates local logs in order to support Agent troubleshooting as required,agent
+59,Agent v6 exposes a local HTTPS API to ease communication between a running Agent and Agent tools (e.g,agent
+60,"The API server can only be accessed from the local network interface (localhost/127.0.0.1), and authentication is enforced through a token that’s only readable by the user that the Agent runs as",agent
+61,"The GUI is launched only if the user launching it has the correct user permissions, including the ability to open the Agent's configuration file",agent
+62,"Regarding its Container Agent specifically, Datadog performs regular vulnerability static analysis using clair by CoreOS and snyk.io",agent
+63,"Additionally, Datadog leverages security scanning as part of its releases of the Container Agent to the Docker Trusted Registry, as well as the Red Hat Container Catalog",agent
+64,"By default, the Agent runs as the dd-agent user on Linux and as the ddagentuser account on Windows",agent
+65,Customers with a requirement to avoid storing secrets in plaintext in the Agent's configuration files can leverage the secrets management package,agent
+66,"This package allows the Agent to call a user-provided executable to handle retrieval or decryption of secrets, which are then loaded in memory by the Agent",agent
+67,"Datadog's Logging without Limits lets you dynamically decide what to include or exclude from your indexes for storage and query, at the same time many types of logs are meant to be used for telemetry to track trends, such as KPIs, over long periods of time",logs
+68,Log-based metrics are a cost-efficient way to summarize log data from the entire ingest stream,logs
+69,"This means that even if you use exclusion filters to limit what you store for exploration, you can still visualize trends and anomalies over all of your log data at 10s granularity for 15 months.",logs
+70,"With log-based metrics, you can generate a count metric of logs that match a query or a distribution metric of a numeric value contained in the logs, such as request duration.",logs
+71,"To generate a new log-based metric, go to the Configuration page of your Datadog account and select the Generate Metrics tab, then the New Metric+ button.",logs
+72,Note: Data points for Log-based metrics are generated at ten second intervals.,logs
+73,Log Management usage metrics come with three tags that can be used for more granular monitoring:,logs
+74,"An extra status tag is available on the datadog.estimated_usage.logs.ingested_events metric to reflect the log status (info, warning, etc.).",logs
+75,"Sometimes, your infrastructure may generate a volume of log events that is too large or has significant fluctuations",logs
+76,"In this situation, you may need to choose which logs to send to a log management solution, and which logs to archive",logs
+77,"Filtering your logs before sending them, however, may lead to gaps in coverage or the accidental removal of valuable data.",logs
+78,"Datadog Log Management removes these limitations by decoupling log ingestion from indexing. This enables you to cost-effectively collect, process, archive, explore, and monitor all your logs with no log limits.",logs
+79,Logging without Limits* also powers Datadog's Security Monitoring by not requiring you to index your logs to detect security threats in your environment.,logs
+80,"Log Collection & Integrations: Begin ingesting logs from your hosts, containers, cloud providers, and other sources.",logs
+81,"Log Configuration: Process and enrich all your logs with pipelines and processors, provide control of your log management budget with indexes, generate metrics from ingested logs, or manage your logs within storage-optimized archives.",logs
+82,"The Log Management product supports multiple environments and formats, allowing customers the flexibility to submit to Datadog nearly any data they choose",logs
+83,This article describes the main security guarantees and filtering controls available to users when submitting logs to Datadog.,logs
+84,"The Datadog Agent submits logs to datadog either through HTTPS or through TLS-encrypted TCP connection on port 10516, requiring outbound communication (see Agent Transport for logs).",logs
+85,Datadog uses symmetric encryption at rest (AES-256) for indexed logs,logs
+86,"Indexed logs are deleted from the Datadog platform once their retention period, as defined by the customer, expires.",logs
+87,"For customers using release 6 or above, the Agent can be configured to filter logs sent by the Agent to the Datadog application",logs
+88,"To prevent the submission of specific logs, use the log_processing_rules setting, with the exclude_at_match or include_at_match type",logs
+89,"This setting enables the creation of a list containing one or more regular expressions, which instructs the Agent to filter out logs based on the inclusion or exclusion rules supplied.",logs
+90,"For customers using release 6, the Agent can be configured to obfuscate specific patterns within logs sent by the Agent to the Datadog application",logs
+91,"To mask sensitive sequences within your logs, use the log_processing_rules setting, with the mask_sequences type",logs
+92,"This setting enables the creation of a list containing one or more regular expressions, which instructs the Agent to redact sensitive data within your logs.",logs
+93,Datadog will sign a Business Associate Agreement (BAA) with customers that transmit protected health information (ePHI) via Datadog’s Log Management Service.,logs
+94,"If you have any questions about how the Log Management Service satisfies the applicable requirements under HIPAA, contact your account manager.",logs
+95,"Previously, HIPAA-enabled customers needed to use specific endpoints to submit logs in order to enforce specific encryptions",logs
+96,The encryptions are enabled on all log submission endpoints.,logs
+97,"The correlation between Datadog APM and Datadog Log Management is improved by the injection of trace IDs, span IDs, env, service, and version as attributes in your logs",logs
+98,"With these fields you can find the exact logs associated with a specific service and version, or all logs correlated to an observed trace.",logs
+99,Note: The Java and PHP Tracers do not support configuration of unified service tagging for logs.,logs
+100,"Before correlating traces with logs, ensure your logs are either sent as JSON, or parsed by the proper language level log processor",logs
+101,Your language level logs must be turned into Datadog attributes in order for traces and logs correlation to work.,logs
+102,"To learn more about automatically or manually connecting your logs to your traces, select your language below:",logs
+103,"See Java Log Collection for Log4j, Log4j 2, or Logback instructions.",logs
+104,"Starting in version 0.74.0, the Java tracer automatically injects trace correlation identifiers into logs",logs
+105,"If you prefer to manually correlate your traces with your logs, use the Java tracer's API to retrieve correlation identifiers",logs
+106,"Use CorrelationIdentifier.getTraceId and CorrelationIdentifier.getSpanId methods to inject identifiers at the beginning of the span being logged, and remove the identifiers when the span is complete.",logs
+107,"Note: If you are not using a Datadog Log Integration to parse your logs, custom log parsing rules need to ensure that dd.trace_id and dd.span_id are being parsed as strings",logs
+108,See the Java log collection documentation for more details about specific logger implementation and instructions for logging in JSON format.,logs
+109,"Connecting OpenTelemetry language SDK logs and traces within Datadog is similar to connecting Datadog SDK logs and traces, with a few additional steps:",logs
+110,"OpenTelemetry Language SDKs lack the automatic trace-log correlation that Datadog SDKs offer, so it’s necessary to manually patch your particular logging module or library with a processor that adds the aforementioned translated TraceId and SpanId as Log attributes marked dd.trace_id and dd.span_id, respectively.",logs
+111,"Ensure your logs are sent as JSON, because your language level logs must be turned into Datadog attributes for trace-log correlation to work.",logs
+112,See the following examples for language-specific information about how to correlate your OpenTelemetry traces and logs.,logs
+113,"To manually correlate your traces with your logs, patch the logging module you are using with a processor that translates OpenTelemetry formatted trace_id and span_id into the Datadog format",logs
+114,"For other logging libraries, it may be more appropriate to modify the Datadog SDK examples",logs
+115,You can also find an example OpenTelemetry instrumented Python application with trace and log correlation in the trace-examples GitHub repository.,logs
+116,"To manually correlate your traces with your logs, patch the logging module you are using with a processor that translates OpenTelemetry formatted trace_id and span_id into the Datadog format",logs
+117,The following example uses the winston logging library,logs
+118,"For other logging libraries, it may be more appropriate to modify the Datadog SDK examples",logs
+119,You can also find an example OpenTelemetry instrumented NodeJS application with trace and log correlation in the trace-examples GitHub repository.,logs
+120,"To manually correlate your traces with your logs, patch the logging module you are using with a processor that translates OpenTelemetry formatted trace_id and span_id into the Datadog format",logs
+121,The following example uses the Ruby Standard Logging Library,logs
+122,"For Rails applications or other logging libraries, it may be more appropriate to modify the Datadog SDK examples",logs
+123,You can also find an example OpenTelemetry instrumented Ruby application with trace and log correlation in the trace-examples GitHub repository.,logs
+124,"To manually correlate your traces with your logs, first enable the openTelemetry-java-instrumentation Logger MDC Instrumentation",logs
+125,"Then, patch the logging module you are using with a processor that translates OpenTelemetry formatted trace_id and span_id into the Datadog format",logs
+126,The following example uses Spring Boot and Logback,logs
+127,"For other logging libraries, it may be more appropriate to modify the Datadog SDK examples.",logs
+128,"For trace and log correlation in PHP, modify the Datadog SDK PHP examples to include the additional steps discussed above.",logs
+129,"To manually correlate your traces with your logs, patch the logging module you are using with a function that translates OpenTelemetry formatted trace_id and span_id into the Datadog format",logs
+130,"For trace and log correlation in .NET, modify the Datadog SDK .NET examples to include the additional steps discussed above.",logs
+131,Synthetic tests allow you to observe how your systems and applications are performing using simulated requests and actions from around the globe,synthetics
+132,"With end-to-end testing in production and CI environments, your development teams can proactively ensure that no defective code makes it to production",synthetics
+133,"API tests allow you to launch single or chained requests to perform verifications on your key systems at various network levels: HTTP test, SSL test, TCP test, DNS test, and ICMP test.",synthetics
+134,Use Synthetic browser tests to monitor how your customers experience your webpages from around the world with end-to-end tests.,synthetics
+135,Use Synthetic private locations to monitor internal APIs and websites or create custom locations in areas that are mission-critical to your business.,synthetics
+136,Leverage your Synthetic tests as canaries or run them directly within your CI pipelines to start shipping without fear that faulty code may impact your customers' experience.,synthetics
+137,"Use the out of the box integration between Synthetic tests and APM traces to find the root cause of failures across frontend, network, and backend requests.",synthetics
+138,See Getting Started with Synthetic Monitoring for instructions on creating your first Synthetic test and monitoring your web applications,synthetics
+139,"Then, explore Getting Started with Private Locations for instructions on creating your private location and running Synthetic tests with your private location.",synthetics
+140,API tests are useful to help you proactively monitor that your most important services are available at anytime and from anywhere,synthetics
+141,API tests come in five different subtypes that allow you to launch requests on the different network layers of your systems:,synthetics
+142,"If your service starts answering more slowly, or in an unexpected way (for example, unexpected response body, wrong A record, etc.), your test can alert your team, block your CI pipeline, or even roll back the faulty deployment.",synthetics
+143,"API tests can run from Datadog managed locations and private locations, allowing full coverage of your systems, both external and internal.",synthetics
+144,Note: API tests are single requests executed against your services,synthetics
+145,"If you want to monitor sophisticated business transactions at the API level or endpoints that require authentication, you can also chain your requests using Multistep API tests.",synthetics
+146,"HTTP tests allow you to send HTTP requests to your applications' API endpoints in order to verify that they are responding to requests, as well as that they meet any conditions you define-such as overall response time, status code, and header or body content.",synthetics
+147,HTTP tests can be run from managed and private locations depending on whether you want to monitor your endpoints from outside or inside your network,synthetics
+148,"HTTP tests can run on a schedule, on-demand, or directly within your CI/CD pipelines.",synthetics
+149,"After choosing the type of test you want to create (HTTP, SSL, TCP, DNS, or ICMP test), you can define your test’s request.",synthetics
+150,Click on Test URL to try out the request configuration,synthetics
+151,Assertions define what an expected test result is,synthetics
+152,"When hitting Test URL basic assertions on response time, status code, and header content-type are added based on the response that was obtained",synthetics
+153,You must define at least one assertion for your test to monitor.,synthetics
+154,"Note: HTTP tests can uncompress bodies with the following content-encoding headers: br, deflate, gzip, and identity.",synthetics
+155,You can create up to 20 assertions per API test by clicking on New Assertion or by clicking directly on the response preview:,synthetics
+156,Set alert conditions to determine the circumstances under which you want a test to fail and trigger an alert.,synthetics
+157,Your test can trigger retries in case of failed test result,synthetics
+158,"By default, the retries are performed 300 ms after the first failed test result-this interval can be configured via the API.",synthetics
+159,Location uptime is computed on a per-evaluation basis (whether the last test result before evaluation was up or down),synthetics
+160,A notification is sent by your test based on the alerting conditions previously defined,synthetics
+161,Enter the notification message for your test,synthetics
+162,Specify how often you want your test to re-send the notification message in case of test failure,synthetics
+163,"To prevent renotification on failing tests, leave the option as Never renotify if the monitor has not been resolved.",synthetics
+164,Click on Save to save your test and have Datadog start executing it.,synthetics
+165,You can create local variables by clicking on Create Local Variable at the top right hand corner of your test configuration form,synthetics
+166,"You can use the global variables defined in the Settings and the locally defined variables in the URL, Advanced Options, and assertions of your HTTP tests.",
+"To display your list of variables, type {{ in your desired field:""",synthetics,
+167,A test is considered FAILED if it does not satisfy one or several assertions or if the request prematurely failed,synthetics
+168,"In some cases, the test can indeed fail without being able to test the assertions against the endpoint, these reasons include:",synthetics
+169,Browser tests are scenarios executed by Datadog on your web applications,synthetics
+170,"These tests verify both that your applications are up and responding to requests, and that any conditions defined in your scenarios are met.",synthetics
+171,You can use the global variables defined in the Settings in the Starting URL as well as in the Advanced Options of your browser tests,synthetics
+172,You can customize alert conditions to define the circumstances under which you want a test to send a notification alert.,synthetics
+173,"To prevent renotification on failing tests, leave the option as Never renotify if the monitor has not been resolved.",synthetics
+174,Tests can be only recorded from Google Chrome,synthetics
+175,"To record your test, download the Datadog Record Test extension for Google Chrome.",synthetics
+176,"Optionally, select Open in a pop-up at the upper right of the page to open your test recording in a separate pop-up window",synthetics
+177,"You can also open the pop in Incognito mode to start recording your test from a fresh browser free from already logged in sessions, cookies from your existing browser, etc.",synthetics
+178,Click on Start recording to begin recording your browser test.,synthetics
+179,"As you click on your application going through the user journey you want to monitor, your actions are automatically recorded and used to create steps within your browser test scenario on the left.",synthetics
+180,Note: You should always make sure to end your browser test with an assertion to confirm the journey executed by the browser test resulted in the expected state.,synthetics
+181,You can use the Synthetic Monitoring IP ranges corresponding to each Datadog managed location:,synthetics
+182,"That being said, if you want to be alerted when the listed IPs change, you can create an API test on the above endpoint with a JSONPath assertion like $.synthetics['prefixes_ipv4_by_location']['aws:ap-northeast-1'].length.",synthetics
+183,You can also identify Datadog robots by using some of the default headers attached to the requests generated by Synthetic tests:,synthetics
+184,A user-agent header is added to all requests performed by Synthetic tests.,synthetics
+185,"For single and multistep API tests, the user-agent header is DatadogSynthetics.",synthetics
+186,"For browser tests, the value of the user-agent header varies depending on the browser and device executing the test",synthetics
+187,The user-agent value always ends with DatadogSynthetics to allow you to identify Synthetic tests.,synthetics
+188,A sec-datadog header is added to all requests performed by Synthetic tests,synthetics
+189,The value notably includes the id of the test from which the request originated.,synthetics
+190,A number of other APM specific headers such as x-datadog-origin: synthetics is also added to requests generated by Synthetic API and browser tests.,synthetics
+191,You can also leverage your API and browser test configuration Advanced options to add specific identifiers to your tests' requests,synthetics
