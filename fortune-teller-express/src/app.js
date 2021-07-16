@@ -35,7 +35,12 @@ app.get('/getFortune/:topic', (req, res, next) => {
   console.log("called");
   console.log(req.params);
   connection.query(
-    'SELECT * FROM fortunes WHERE topic=(?) ORDER BY RAND() LIMIT 1;', [req.params.topic],
+    'SELECT quote \
+    FROM (\
+      SELECT * FROM fortunes WHERE topic=(?)) topic_fortunes\
+      WHERE message_id >= RAND() * \
+      ( SELECT MAX(message_id) FROM fortunes)\
+    ORDER BY message_id LIMIT 1;', [req.params.topic],
     (error, result) => {
       if (error) {
           console.error(error);
