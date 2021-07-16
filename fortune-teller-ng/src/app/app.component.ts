@@ -4,7 +4,7 @@ import {Point} from './interfaces/point';
 import { Observable, Subscriber } from 'rxjs';
 import {HttpClient, HttpClientModule, HttpHeaders, HttpParams} from '@angular/common/http';
 import { datadogRum } from '@datadog/browser-rum';
-
+import { datadogLogs } from '@datadog/browser-logs';
 
 @Component({
   selector: 'app-root',
@@ -52,6 +52,7 @@ export class AppComponent implements OnInit, AfterViewInit{
                      
   constructor(private httpClient: HttpClient){
     //this.updatedProps = Object.assign({}, this.startProps);
+    datadogRum.addRumGlobalContext('hey there', 'value here');
     this.cloudProps = Object.assign({}, this.startProps);
     this.gridProps['grid-template-rows'] =  + (document.documentElement.clientHeight - 60) + "px";
     datadogRum.init({
@@ -63,7 +64,16 @@ export class AppComponent implements OnInit, AfterViewInit{
       // version: '1.0.0',
       sampleRate: 100,
       trackInteractions: true
-  });
+    });
+    datadogLogs.init({
+      clientToken: 'pubecd1d4823887980a4a7c96a476ac55f1',
+      site: 'datadoghq.com',
+      forwardErrorsToLogs: true,
+      sampleRate: 100,
+      env: 'testing'
+    });
+    datadogLogs.addLoggerGlobalContext('anotherAttribute', 'hereiam')
+
   }
 
 
