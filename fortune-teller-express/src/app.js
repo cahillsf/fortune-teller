@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const events = require('./route-fortunes');
-const logger = require('../logger')
+const logger = require('./logger')
 //require('dotenv').config()
 
 //import {Observable} from rxjs;
@@ -32,9 +32,10 @@ const app = express()
   //.use(events(connection))
   .use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/getFortune/:topic', (req, res, next) => {
-  console.log("called");
-  console.log(req.params);
+app.get('/getFortune/:topic', async (req, res, next) => {
+  // console.log("called");
+  // console.log(req.params);
+  logger.info("called for " + req.params);
   connection.query(
     'SELECT quote \
     FROM (\
@@ -45,9 +46,11 @@ app.get('/getFortune/:topic', (req, res, next) => {
     (error, result) => {
       if (error) {
           console.error(error);
+          logger.error(error)
           res.status(500).json({status: 'error'});
       } else {
           console.log(result[0]);
+          logger.info(result[0]);
           res.status(200).json(result[0]['quote']);
       }
     }
