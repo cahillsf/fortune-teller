@@ -47,5 +47,7 @@ services:
         context: ./fortune-teller-ng
       depends_on: 
         - express_server
+      env_file:
+        - ~/sandbox.docker.env
       ports:
         - '4200:4200'
