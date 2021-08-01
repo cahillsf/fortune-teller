@@ -11,6 +11,7 @@ Once the application is spun up, you be able to see the related logs, traces, an
 - Step 1: <ADD_RUM_APP_INSRUCTIONS>
 - Step 2: Configure ENV file with your Datadog Agent API key, Datadog RUM App ID, and Datadog RUM Client Token
 ---
+
 **Step 1.  SEE ABOVE
 
 **Step 2.  Configure ENV file with your Datadog Agent API key**
