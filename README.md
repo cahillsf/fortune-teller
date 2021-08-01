@@ -6,3 +6,13 @@ This sandbox serves a fortune telling Angular web application based on Zoltar Sp
 
 
 Once the application is spun up, you be able to see the related logs, traces, and RUM data being sent to your Datadog account.  You can also install the MySQL integration in your account, as the agent will autodiscover the MySQL database through container labels.
+
+## Sections
+---
+* 1.  Configure ENV file with your Datadog Agent API key
+In your ```~``` directory, create a file called ```sandbox.docker.env``` that contains:
+```
+DD_API_KEY=<YOUR_API_KEY>
+```
+
+
