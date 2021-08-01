@@ -21,5 +21,4 @@ In your ```~``` directory, create a file called ```sandbox.docker.env``` that co
 DD_API_KEY=<YOUR_API_KEY>
 DD_APP_ID=<YOUR_APP_ID>
 DD_CLIENT_TOKEN =<YOUR_CLIENT_TOKEN>
-
 ```
