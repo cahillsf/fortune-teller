@@ -5,6 +5,7 @@ import { Observable, Subscriber } from 'rxjs';
 import {HttpClient, HttpClientModule, HttpHeaders, HttpParams} from '@angular/common/http';
 import { datadogRum } from '@datadog/browser-rum';
 import { datadogLogs } from '@datadog/browser-logs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -56,23 +57,25 @@ export class AppComponent implements OnInit, AfterViewInit{
     this.cloudProps = Object.assign({}, this.startProps);
     this.gridProps['grid-template-rows'] =  + (document.documentElement.clientHeight - 60) + "px";
     datadogRum.init({
-      applicationId: 'bf97d17c-15d9-43f7-9058-2929c414755a',
-      clientToken: 'pubecd1d4823887980a4a7c96a476ac55f1',
+      applicationId: environment.ddAppId,
+      clientToken: environment.ddClientToken,
       site: 'datadoghq.com',
       service:'fortune-teller',
       // Specify a version number to identify the deployed version of your application in Datadog 
-      // version: '1.0.0',
+      version: '1.0.0',
       sampleRate: 100,
       trackInteractions: true
     });
     datadogLogs.init({
-      clientToken: 'pubecd1d4823887980a4a7c96a476ac55f1',
+      clientToken: environment.ddClientToken,
       site: 'datadoghq.com',
       forwardErrorsToLogs: true,
       sampleRate: 100,
       env: 'testing'
     });
     datadogLogs.addLoggerGlobalContext('anotherAttribute', 'hereiam')
+    console.log(environment.ddAppId);
+    console.log(environment.ddClientToken);
 
   }
 
