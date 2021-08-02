@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener} from '@angular/core';
 import {cloudCss} from './interfaces/cloudCss';
 import {Point} from './interfaces/point';
-import { Observable, Subscriber } from 'rxjs';
 import {HttpClient, HttpClientModule, HttpHeaders, HttpParams} from '@angular/common/http';
 import { datadogRum } from '@datadog/browser-rum';
 import { datadogLogs } from '@datadog/browser-logs';
@@ -220,10 +219,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     this.cloudProps['display'] = 'block';
     // console.log(this.cloudProps);
     setTimeout(() => { 
-        console.log("setting start props");
-        // console.log(this.startProps);
         this.cloudProps = Object.assign({}, this.startProps);
-        // console.log(this.cloudProps);
     }, 15000)
   }
 
