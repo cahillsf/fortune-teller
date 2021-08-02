@@ -19,6 +19,6 @@ Once the application is spun up, you be able to see the related logs, traces, an
 In your ```~``` directory, create a file called ```sandbox.docker.env``` that contains:
 ```
 DD_API_KEY=<YOUR_API_KEY>
-DD_APP_ID=<YOUR_APP_ID>
-DD_CLIENT_TOKEN =<YOUR_CLIENT_TOKEN>
+DD_FT_APP_ID=<YOUR_APP_ID>
+DD_FT_CLIENT_TOKEN=<YOUR_CLIENT_TOKEN>
 ```
