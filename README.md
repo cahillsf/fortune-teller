@@ -55,8 +55,10 @@ If you are still in the same terminal you have initialized the app from, you can
 ### Docker tips to manage your local memory
 
 Some commands to clear out unsused image layers, containers and volumes from your local machine:
-```docker rm $(docker ps -f status=exited -aq)
+```
+docker rm $(docker ps -f status=exited -aq)
 docker rmi $(docker images -f "dangling=true" -q)
-docker volume rm $(docker volume ls -qf dangling=true)```
+docker volume rm $(docker volume ls -qf dangling=true)
+```
 
 
