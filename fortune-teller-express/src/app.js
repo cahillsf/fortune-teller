@@ -32,7 +32,7 @@ app.get('/getFortune/:topic', async (req, res, next) => {
   // console.log("called");
   // console.log(req.params);
   let topic = req.params.topic;
-  logger.info("called for " + topic);
+  logger.info({'topic': topic});
   connection.query(
     'SELECT quote \
     FROM (\
