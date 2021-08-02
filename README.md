@@ -8,7 +8,7 @@ The front end is built with Angular and is served using an Angular development s
 
 The Express and Angular services are built from a Dockerfile that you can see within the service's directory (i.e. ```fortune-teller-express/Dockerfile```).  The MySQL service is built directly from the ```mysql:8.0.20``` image, then the database is initialized from a startup SQL script ```fortune-teller/fortune-teller-mysql/mysql-db-init-files/fortune-teller-mysql-script.sql```.  The Datadog Agent service is built directly from the latest [Agent image](https://docs.datadoghq.com/agent/docker/?tab=standard) (```datadog/agent:latest```) with all necessary initialization settings provided directly in the ```docker-compose``` file via environment variables.
 
-Once the application is spun up, you be able to see the related logs, traces, and RUM data being sent to your Datadog account.  You can also install the [MySQL integration](https://app.datadoghq.com/account/settings) in your account, as the agent will autodiscover the MySQL database through the container labels.
+Once the application is spun up, you be able to see the related logs, traces, and RUM data being sent to your Datadog account.  For traces you will notice we are getting the *full stack trace* by connecting RUM and Traces.  You can also install the [MySQL integration](https://app.datadoghq.com/account/settings) in your account, as the agent will autodiscover the MySQL database through the container labels.
 
 #### Example traces:
 - ```GET /getFortune/:topic``` - https://a.cl.ly/YEuOGyRK
