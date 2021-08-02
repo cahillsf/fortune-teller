@@ -6,9 +6,13 @@ This sandbox serves a fortune telling web application based on Zoltar Speaks fro
 
 The front end is built with Angular and is served using an Angular development server, the back end is a simple Express (NodeJS) server, and the database being used is MySQL.  I have used a ```docker-compose``` file to define and run the application containers.  
 
-The Express and Angular services are built from a Dockerfile that you can see within the service's directory (i.e. ```fortune-teller-express/Dockerfile```).  The MySQL service is built directly from the ```mysql:8.0.20``` image, then the database is initialized from a startup SQL script ```fortune-teller/fortune-teller-mysql/mysql-db-init-files/fortune-teller-mysql-script.sql```.  The Datadog Agent service is built directly from the latest [Agent image](https://docs.datadoghq.com/agent/docker/?tab=standard) (```datadog/agent:latest```) with all necessary initialization settings provided directly in the ```docker-compose``` file via environment variables and volume mounts.
+The Express and Angular services are built from a Dockerfile that you can see within the service's directory (i.e. ```fortune-teller-express/Dockerfile```).  The MySQL service is built directly from the ```mysql:8.0.20``` image, then the database is initialized from a startup SQL script ```fortune-teller/fortune-teller-mysql/mysql-db-init-files/fortune-teller-mysql-script.sql```.  The Datadog Agent service is built directly from the latest [Agent image](https://docs.datadoghq.com/agent/docker/?tab=standard) (```datadog/agent:latest```) with all necessary initialization settings provided directly in the ```docker-compose``` file via environment variables.
 
-Once the application is spun up, you be able to see the related logs, traces, and RUM data being sent to your Datadog account.  You can also install the [MySQL integration](https://app.datadoghq.com/account/settings) in your account, as the agent will autodiscover the MySQL database through the container labels.
+Once the application is spun up, you be able to see the related logs, traces, and RUM data being sent to your Datadog account.  For traces you will notice we are getting the *full stack trace* by connecting RUM and Traces.  You can also install the [MySQL integration](https://app.datadoghq.com/account/settings) in your account, as the agent will autodiscover the MySQL database through the container labels.
+
+#### Example traces:
+- ```GET /getFortune/Synthetics``` - https://a.cl.ly/YEuOGzvK
+- ```GET /getError/500``` - https://a.cl.ly/jku4g6nR
 
 *Prerequisites:* You must have Docker installed to your machine- you can verify this by running ```docker --version```.  If you need to install Docker, you can do so by following [this link](https://docs.docker.com/get-docker/).  Then, clone this repository or download the ```fortune-teller``` folder to your machine
 
@@ -19,6 +23,7 @@ Once the application is spun up, you be able to see the related logs, traces, an
 - Step 4: Generate some of that sweet sweet data
 - Step 5: View the data in your Datadog account
 - Step 6: Shut it down!
+- Credits
 - Docker tips to manage your local memory
 ---
 
@@ -42,7 +47,8 @@ DD_FT_CLIENT_TOKEN=<YOUR_CLIENT_TOKEN>
 
 ### Step 4. Generate some of that sweet sweet data
 
-Verify the app has been fully initialized by running ```docker ps -a```.  You should see all four ```fortune-teller``` containers (```fortune-teller_angular_web_1```, ```datadog-agent-ft```, ```fortune-teller_express_server_1```, ```fortune-teller_mysql_db_1```) as ```Up```.  It may take several minutes for the server to stand up.  You can check the logs ([Logs Search](https://app.datadoghq.com/logs)) to gain some deeper insights if you suspect something has gone wrong.  You can then navigate to [localhost:4200](http://localhost:4200/) on your favorite web browser and start interacting with ```fortune-teller```.  Click on the topic buttons on the top toolbar of the screen to receive a fortune, or click the error codes to generate an error.
+Verify the app has been fully initialized by running ```docker ps -a```.  You should see all four ```fortune-teller``` containers (```fortune-teller_angular_web_1```, ```datadog-agent-ft```, ```fortune-teller_express_server_1```, ```fortune-teller_mysql_db_1```) as ```Up```.  It may take several minutes for the server to stand up.  You can check the logs ([Logs Search](https://app.datadoghq.com/logs)) to gain some deeper insights if you suspect something has gone wrong.  You can then navigate to [localhost:4200](http://localhost:4200/) on your favorite web browser and start interacting with ```fortune-teller```.  Click on the topic buttons on the top toolbar of the screen to receive a fortune, or click the error codes to generate an error:
+https://a.cl.ly/X6ulkdjb
 
 ### Step 5. View the data in your Datadog account
 
@@ -51,6 +57,10 @@ Go to your [Logs Search](https://app.datadoghq.com/logs) view to see the app-gen
 ### Step 6.  Shut it down!
 
 If you are still in the same terminal you have initialized the app from, you can use ```Ctrl + C``` to stop the containers, then run ```docker-compose down``` to remove the containers and the network.  If you are in a different terminal, you can simply run ```docker-compose down``` to both stop the application and remove the containers/network.
+
+### Credits
+
+A lot of the logging and Node APM configuration I sourced from Wan's Node APM 101 Sessions as well as her [docker-express-pg sandbox](https://github.com/DataDog/sandbox/tree/master/APM/Nodejs/docker-express-pg).  My desire to incorporate the RUM aspects and build out a front end came from Zach's [reactdog sandbox](https://github.com/DataDog/sandbox/tree/master/RUM/ReactJS/reactdog).  Thanks Wan and Zach!
 
 ### Docker tips to manage your local memory
 
