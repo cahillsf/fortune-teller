@@ -73,8 +73,6 @@ export class AppComponent implements OnInit, AfterViewInit{
       env: 'testing'
     });
     datadogLogs.addLoggerGlobalContext('anotherAttribute', 'hereiam')
-    console.log(environment.ddAppId);
-    console.log(environment.ddClientToken);
 
   }
 
