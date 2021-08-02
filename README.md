@@ -11,8 +11,8 @@ The Express and Angular services are built from a Dockerfile that you can see wi
 Once the application is spun up, you be able to see the related logs, traces, and RUM data being sent to your Datadog account.  For traces you will notice we are getting the *full stack trace* by connecting RUM and Traces.  You can also install the [MySQL integration](https://app.datadoghq.com/account/settings) in your account, as the agent will autodiscover the MySQL database through the container labels.
 
 #### Example traces:
-- ```GET /getFortune/:topic``` - https://a.cl.ly/YEuOGyRK
-- ```GET /getError/:code``` - https://a.cl.ly/yAuyXlro
+- ```GET /getFortune/Synthetics``` - https://a.cl.ly/YEuOGzvK
+- ```GET /getError/500``` - https://a.cl.ly/jku4g6nR
 
 *Prerequisites:* You must have Docker installed to your machine- you can verify this by running ```docker --version```.  If you need to install Docker, you can do so by following [this link](https://docs.docker.com/get-docker/).  Then, clone this repository or download the ```fortune-teller``` folder to your machine
 
