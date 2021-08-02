@@ -19,6 +19,7 @@ Once the application is spun up, you be able to see the related logs, traces, an
 - Step 4: Generate some of that sweet sweet data
 - Step 5: View the data in your Datadog account
 - Step 6: Shut it down!
+- Credits
 - Docker tips to manage your local memory
 ---
 
@@ -51,6 +52,10 @@ Go to your [Logs Search](https://app.datadoghq.com/logs) view to see the app-gen
 ### Step 6.  Shut it down!
 
 If you are still in the same terminal you have initialized the app from, you can use ```Ctrl + C``` to stop the containers, then run ```docker-compose down``` to remove the containers and the network.  If you are in a different terminal, you can simply run ```docker-compose down``` to both stop the application and remove the containers/network.
+
+### Credits
+
+A lot of the logging and Node APM configuration I sourced from Wan's Node APM 101 Sessions as well as her [docker-express-pg sandbox](https://github.com/DataDog/sandbox/tree/master/APM/Nodejs/docker-express-pg).  My desire to incorporate the RUM aspects and build out a front end came from Zach's [reactdog sandbox](https://github.com/DataDog/sandbox/tree/master/RUM/ReactJS/reactdog).  Thanks Wan and Zach!
 
 ### Docker tips to manage your local memory
 
