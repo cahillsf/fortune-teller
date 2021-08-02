@@ -63,7 +63,8 @@ export class AppComponent implements OnInit, AfterViewInit{
       // Specify a version number to identify the deployed version of your application in Datadog 
       version: '1.0.0',
       sampleRate: 100,
-      trackInteractions: true
+      trackInteractions: true,
+      allowedTracingOrigins:["http://localhost:8080"]
     });
     datadogLogs.init({
       clientToken: environment.ddClientToken,
