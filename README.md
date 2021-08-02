@@ -37,8 +37,8 @@ DD_FT_CLIENT_TOKEN=<YOUR_CLIENT_TOKEN>
 
 ### Step 3.  Spin up the Docker containers
 
-i. Build the images using the following command: ```docker-compose build```.  *Note:* This may take awhile if it is your first time running ```fortune-teller```.
-ii. Spin up the containers using the following command: ```docker-compose up```
+- Build the images using the following command: ```docker-compose build```.  *Note:* This may take awhile if it is your first time running ```fortune-teller```.
+- Spin up the containers using the following command: ```docker-compose up```
 
 ### Step 4. Generate some of that sweet sweet data
 
