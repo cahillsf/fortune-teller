@@ -26,7 +26,7 @@ Once the application is spun up, you be able to see the related logs, traces, an
 
 Create a new application in your Datadog account by following [this link](https://app.datadoghq.com/rum/application/create), name the application ```fortune-teller``` and select ```Generate Client Token```.  The ```init``` block will contain your ```clientToken``` and ```applicationId```.  Copy these two strings and keep them handy, as you will need them for Step 2.
 
-### Step 2.  Configure ENV file with your Datadog Agent API key
+### Step 2.  Configure ENV file with your Datadog Agent API key, Datadog RUM App ID, and Datadog RUM Client Token
 
 In your ```~``` directory, create a file called ```sandbox.docker.env``` that contains:
 ```
