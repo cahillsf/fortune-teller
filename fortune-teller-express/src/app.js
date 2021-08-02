@@ -5,9 +5,6 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const events = require('./route-fortunes');
 const logger = require('./logger')
-//require('dotenv').config()
-
-//import {Observable} from rxjs;
 
 const connection = mysql.createConnection({
   host     : 'mysql_db',
@@ -17,7 +14,6 @@ const connection = mysql.createConnection({
   database : 'fortune_teller'
 });
 
-//connection.connect();
 
 connection.connect(function(err) {
   if (err) throw err;
@@ -35,7 +31,8 @@ const app = express()
 app.get('/getFortune/:topic', async (req, res, next) => {
   // console.log("called");
   // console.log(req.params);
-  logger.info("called for " + req.params);
+  let topic = req.params.topic;
+  logger.info("called for " + topic);
   connection.query(
     'SELECT quote \
     FROM (\
@@ -45,11 +42,9 @@ app.get('/getFortune/:topic', async (req, res, next) => {
     ORDER BY message_id LIMIT 1;', [req.params.topic],
     (error, result) => {
       if (error) {
-          console.error(error);
           logger.error(error)
           res.status(500).json({status: 'error'});
       } else {
-          console.log(result[0]);
           logger.info(result[0]);
           res.status(200).json(result[0]['quote']);
       }
@@ -62,9 +57,11 @@ app.get('/getError/:code', (req, res, next) => {
   console.log(req.params.code);
   let code = req.params.code;
   if(code != 500){
+    logger.info({status: 400, message: "Bad Request - Here's your 400 thanks"});
     res.status(400).json({status: 400, message: "Bad Request - Here's your 400 thanks"});
   }
   else{
+    logger.error({status: 500, message: "Internal Server Error - Here's your 500 thanks"})
     res.status(500).json({status: 500, message: "Internal Server Error - Here's your 500 thanks"});
   }
 });
