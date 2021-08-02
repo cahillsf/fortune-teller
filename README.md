@@ -15,6 +15,7 @@ Once the application is spun up, you be able to see the related logs, traces, an
 ---
 
 **Step 1.  Create a RUM Application in your Datadog account**
+
 Create a new application in your Datadog account by following [this link](https://app.datadoghq.com/rum/application/create), name the application ```fortune-teller``` and select ```Generate Client Token```.  The ```init``` block will contain your ```clientToken``` and ```applicationId```.  Copy these two strings and keep them handy, as you will need them for Step 2.
 
 **Step 2.  Configure ENV file with your Datadog Agent API key**
