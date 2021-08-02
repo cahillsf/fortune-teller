@@ -47,7 +47,8 @@ DD_FT_CLIENT_TOKEN=<YOUR_CLIENT_TOKEN>
 
 ### Step 4. Generate some of that sweet sweet data
 
-Verify the app has been fully initialized by running ```docker ps -a```.  You should see all four ```fortune-teller``` containers (```fortune-teller_angular_web_1```, ```datadog-agent-ft```, ```fortune-teller_express_server_1```, ```fortune-teller_mysql_db_1```) as ```Up```.  It may take several minutes for the server to stand up.  You can check the logs ([Logs Search](https://app.datadoghq.com/logs)) to gain some deeper insights if you suspect something has gone wrong.  You can then navigate to [localhost:4200](http://localhost:4200/) on your favorite web browser and start interacting with ```fortune-teller```.  Click on the topic buttons on the top toolbar of the screen to receive a fortune, or click the error codes to generate an error.
+Verify the app has been fully initialized by running ```docker ps -a```.  You should see all four ```fortune-teller``` containers (```fortune-teller_angular_web_1```, ```datadog-agent-ft```, ```fortune-teller_express_server_1```, ```fortune-teller_mysql_db_1```) as ```Up```.  It may take several minutes for the server to stand up.  You can check the logs ([Logs Search](https://app.datadoghq.com/logs)) to gain some deeper insights if you suspect something has gone wrong.  You can then navigate to [localhost:4200](http://localhost:4200/) on your favorite web browser and start interacting with ```fortune-teller```.  Click on the topic buttons on the top toolbar of the screen to receive a fortune, or click the error codes to generate an error:
+https://a.cl.ly/X6ulkdjb
 
 ### Step 5. View the data in your Datadog account
 
