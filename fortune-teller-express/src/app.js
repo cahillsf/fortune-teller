@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
-const events = require('./route-fortunes');
 const logger = require('./logger')
 
 const connection = mysql.createConnection({
