@@ -5,9 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import { FindYourselfComponent } from './find-yourself/find-yourself.component';
+import { HomePageComponent } from './home-page/home-page.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FindYourselfComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
