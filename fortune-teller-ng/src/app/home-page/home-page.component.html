@@ -1,0 +1,21 @@
+<div (window:resize)="onResize($event)" class="toolbar" role="banner">
+
+    <span id="welcome">Welcome to ZoltBits Speaks</span>
+      <div class="spacer"></div>
+      <button routerLink="/find-yourself" routerLinkActive="active"class="btn btn-primary" >Find Yourself</button>
+      <button class="btn btn-primary" (click)="getError($event)">500</button>
+      <button class="btn btn-primary" (click)="getError($event)">400</button>
+      <button class="btn btn-primary" (click)="initializeCloudAction($event)">Logs</button>
+      <button class="btn btn-primary" (click)="initializeCloudAction($event)">Agent</button> 
+      <button class="btn btn-primary" (click)="initializeCloudAction($event)">Synthetics</button> 
+</div>
+<canvas #canvasEl id="canvasEl"></canvas>
+<div #mainGrid [ngStyle]=gridProps class="grid-container">
+    <div class="zoltbits">
+      <img src="assets/zoltbits_clean.png">
+    </div>
+</div>
+<div id="quoteCloud" [ngStyle]=cloudProps>
+<img id="cloudTwo" src="assets/opaque-cloud.png">
+<p #quoteText id="quoteText" [textContent]="'This is a longer quote here. Haha haha haha testing testing testing hahahaha.  Wowie what a quote.'"></p>
+</div>
