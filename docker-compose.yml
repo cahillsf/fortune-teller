@@ -10,11 +10,14 @@ services:
         - DD_LOGS_ENABLED=true
         - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
         - DD_APM_NON_LOCAL_TRAFFIC=true
-        - DD_AC_EXCLUDE=name:datadog-agent-ft
+        #- DD_CLOUD_PROVIDER_METADATA=aws
+        - DD_TAGS="testing:here"
       volumes: 
         - /var/run/docker.sock:/var/run/docker.sock:ro
         - /proc/:/host/proc/:ro
         - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      # labels:
+      #   com.datadoghq.ad.logs: '[{"source":"testinghere"}]'
       ports:
         - "8126:8126"
       restart: on-failure
@@ -38,6 +41,7 @@ services:
       depends_on: 
         - mysql_db
       environment: 
+        - DD_ENV=prod
         - DD_AGENT_HOST=datadog-agent-ft
       ports:
         - '8080:8080'
