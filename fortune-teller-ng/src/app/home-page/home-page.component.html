@@ -7,7 +7,8 @@
       <button class="btn btn-primary" (click)="getError($event)">400</button>
       <button class="btn btn-primary" (click)="initializeCloudAction($event)">Logs</button>
       <button class="btn btn-primary" (click)="initializeCloudAction($event)">Agent</button> 
-      <button class="btn btn-primary" (click)="initializeCloudAction($event)">Synthetics</button> 
+      <button class="btn btn-primary" (click)="initializeCloudAction($event)">Synthetics</button>
+      <button class="btn btn-primary" (click)="stopRecording()">Stop Recording Pls</button> 
 </div>
 <canvas #canvasEl id="canvasEl"></canvas>
 <div #mainGrid [ngStyle]=gridProps class="grid-container">

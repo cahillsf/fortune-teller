@@ -32,7 +32,9 @@ export class AppComponent implements OnInit{
       sampleRate: 100,
       env: 'testing'
     });
-    datadogLogs.addLoggerGlobalContext('anotherAttribute', 'hereiam')
+    datadogLogs.addLoggerGlobalContext('anotherAttribute', 'hereiam');
+    datadogRum.startSessionReplayRecording();
+
   }
 
 }

@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener} 
 import {cloudCss} from '../interfaces/cloudCss';
 import {Point} from '../interfaces/point';
 import {HttpClient, HttpClientModule, HttpHeaders, HttpParams} from '@angular/common/http';
+import { datadogRum } from '@datadog/browser-rum';
+import { datadogLogs } from '@datadog/browser-logs';
 
 @Component({
   selector: 'app-home-page',
@@ -95,6 +97,11 @@ export class HomePageComponent implements OnInit, AfterViewInit{
     if(!this.isConsuming){
       this.consume();
     }
+  }
+
+  stopRecording(){
+    datadogLogs.logger.info('Session replay stopped thanks', { name: 'buttonName', id: 123 })
+    datadogRum.stopSessionReplayRecording();
   }
 
   consume(){
